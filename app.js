@@ -1,8 +1,7 @@
-import {readFileSync} from 'fs'
+import {readFileSync, writeFile} from 'fs'
 import { dirname, resolve} from 'path'
 import { fileURLToPath } from 'url'
 import express from 'express'
-import { writeFile } from 'fs/promises'
 
 const PORT = 3000
 const __dirname = dirname(fileURLToPath(import.meta.url))
