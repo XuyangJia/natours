@@ -1,5 +1,6 @@
 import { dirname, resolve } from 'path'
 import { fileURLToPath } from 'url'
+import { env } from 'process'
 import express from 'express'
 import morgan from 'morgan'
 import tourRouter from './router/tourRoutes.js'
@@ -10,7 +11,9 @@ console.log(__dirname)
 const app = express()
 
 // MIDDLEWARES
-app.use(morgan('dev'))
+if (env.NODE_ENV === 'development') {
+  app.use(morgan('dev'))
+}
 app.use(express.json())
 app.use(express.static(resolve(__dirname, 'public')))
 
