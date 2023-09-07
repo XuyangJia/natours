@@ -1,14 +1,14 @@
 import express from 'express'
-import {checkBody, checkId, createUser, deleteUser, getAllUsers, getUser, updateUser} from '../controller/userController.js'
+import {createUser, deleteUser, getAllUsers, getUser, updateUser} from '../controller/userController.js'
 
 const router = express.Router()
 
-router.param('id', checkId)
+// router.param('id', checkId)
 
 router
   .route('/')
   .get(getAllUsers)
-  .post(checkBody, createUser)
+  .post(createUser)
 
 router
   .route('/:id')
