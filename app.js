@@ -7,7 +7,6 @@ import tourRouter from './router/tourRoutes.js'
 import userRouter from './router/userRoutes.js'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-console.log(__dirname)
 const app = express()
 
 // MIDDLEWARES
