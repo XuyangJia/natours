@@ -1,12 +1,5 @@
-// import {readFileSync, writeFile} from 'fs'
-// import { dirname, resolve} from 'path'
-// import { fileURLToPath } from 'url'
-
-// const __dirname = dirname(fileURLToPath(import.meta.url))
-// const dataDir = resolve(__dirname, '../dev-data/data')
-// const tours = JSON.parse(readFileSync(resolve(dataDir, 'tours.json')))
-// import mongoose from 'mongoose'
 import Tour from '../models/tourModel.js'
+import APIFeatures from '../utils/apiFeatures.js'
 
 const createTour = async (req, res) => {
   try {
@@ -23,9 +16,25 @@ const createTour = async (req, res) => {
   }
 }
 
+const aliasTopTours = async (req, res, next) => {
+  req.query = {
+    sort: '-ratingsAverage price',
+    limit: 5,
+    fields: 'name price ratingsAverage summary difficulty',
+  }
+  next()
+}
+
 const getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find()
+    // EXCUTE QUERY
+    const features = new APIFeatures(Tour.find(), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate()
+    const tours = await features.query
+
     res.status(200).json({
       status: 'success',
       results: tours.length,
@@ -93,4 +102,5 @@ export default {
   getTour,
   updateTour,
   deleteTour,
+  aliasTopTours,
 }
